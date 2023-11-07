@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.1.0
+  version: 1.1.1
   description: STD22001
 servers:
   - url: https://library.com
@@ -139,25 +139,11 @@ paths:
 components:
   schemas:
     Book:
-      type: object
-      properties:
-        id:
-          type: string
-        bookName:
-          type: string
-        author:
-          $ref: '#/components/schemas/Author'
-        pageNumbers:
-          type: integer
-        topic:
-          type: string
-          enum:
-            - ROMANCE
-            - COMEDY
-            - OTHER
-        releaseDate:
-          type: string
-          format: date
+      allOf:
+        - $ref: '#/components/schemas/CrupdateBook'
+        - properties:
+            author:
+              $ref: '#/components/schemas/Author'
     Author:
       type: object
       properties:
