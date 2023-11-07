@@ -98,6 +98,18 @@ paths:
           schema:
             type: string
           required: false
+        - in: path
+          name: page
+          description: pagination parameter
+          schema:
+            type: integer
+            default: 1
+        - in: path
+          name: pageSize
+          description: pagination parameter
+          schema:
+            type: integer
+            default: 50
       responses:
         200:
           description: The list of filtered authors
