@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.0.0
+  version: 1.1.1
   description: STD22001
 servers:
   - url: https://library.com
@@ -101,7 +101,7 @@ paths:
             type: integer
       responses:
         '200':
-          description: Student deleted successfully
+          description: Authors deleted successfully
 components:
   schemas:
     Book:
@@ -137,3 +137,21 @@ components:
           enum:
             - M
             - F
+    CrupdateBook:
+      type: object
+      properties:
+        ID:
+          type: integer
+        bookName:
+          type: string
+        pageNumbers:
+          type: integer
+        topic:
+          type: string
+          enum:
+            - ROMANCE
+            - COMEDY
+            - OTHER
+        releaseDate:
+          type: string
+          format: date
