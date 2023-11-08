@@ -52,9 +52,25 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Book'
+                $ref: '#/components/schemas/200Response'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400Response'
+        403:
+          description: Forbidden from accessing a valid URL
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403Response'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500Response'
     put:
       tags:
         - Books
@@ -69,13 +85,29 @@ paths:
                 $ref: '#/components/schemas/Book'
       responses:
         200:
-          description: The list of created or updated books
+          description: The list of filtered books
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Book'
+                $ref: '#/components/schemas/200Response'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400Response'
+        403:
+          description: Forbidden from accessing a valid URL
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403Response'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500Response'
   /authors:
     get:
       summary: Get all authors
@@ -104,13 +136,29 @@ paths:
             $ref: '#/components/schemas/Pagination'
       responses:
         200:
-          description: The list of filtered authors
+          description: The list of filtered books
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Author'
+                $ref: '#/components/schemas/200Response'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400Response'
+        403:
+          description: Forbidden from accessing a valid URL
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403Response'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500Response'
     put:
       summary: Create or update authors
       operationId: crupdateAuthors
@@ -125,13 +173,29 @@ paths:
                 $ref: '#/components/schemas/Author'
       responses:
         200:
-          description: The list of created or updated authors
+          description: The list of filtered books
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Author'
+                $ref: '#/components/schemas/200Response'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400Response'
+        403:
+          description: Forbidden from accessing a valid URL
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403Response'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500Response'
   /authors/books:
     delete:
       summary: Delete authors
@@ -147,11 +211,29 @@ paths:
           required: false
       responses:
         200:
-          description: The authors deleted
+          description: The list of filtered books
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Author'
+                $ref: '#/components/schemas/200Response'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400Response'
+        403:
+          description: Forbidden from accessing a valid URL
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403Response'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500Response'
   /authors/{aId}:
     delete:
       summary: Delete an author
@@ -167,11 +249,29 @@ paths:
           required: true
       responses:
         200:
-          description: The author deleted
+          description: The list of filtered books
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Author'
+                $ref: '#/components/schemas/200Response'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400Response'
+        403:
+          description: Forbidden from accessing a valid URL
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403Response'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500Response'
   /books/{bId}/authors/{aId}:
     put:
       parameters:
@@ -187,11 +287,29 @@ paths:
             type: string
       responses:
         200:
-          description: Book's Author are updated successfully
+          description: The list of filtered books
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Book'
+                $ref: '#/components/schemas/200Response'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400Response'
+        403:
+          description: Forbidden from accessing a valid URL
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403Response'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500Response'
 
 components:
   schemas:
@@ -242,6 +360,46 @@ components:
         PageSize:
           type: integer
           default: 50
+    Responses:
+      type: object
+      properties:
+        status:
+          type: object
+          properties:
+            statusCode:
+              type: integer
+            message:
+              type: string
+        body:
+          type: string
+    200Response:
+      allOf:
+        - $ref: '#/components/schemas/Responses'
+        - type: object
+          properties:
+            data:
+              type: string
+    400Response:
+      allOf:
+        - $ref: '#/components/schemas/Responses'
+        - type: object
+          properties:
+            data:
+              type: string
+    403Response:
+      allOf:
+        - $ref: '#/components/schemas/Responses'
+        - type: object
+          properties:
+            data:
+              type: string
+    500Response:
+      allOf:
+        - $ref: '#/components/schemas/Responses'
+        - type: object
+          properties:
+            data:
+              type: string
   parameters:
     queryPagination:
       in: query
