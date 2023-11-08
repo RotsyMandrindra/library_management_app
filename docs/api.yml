@@ -45,14 +45,7 @@ paths:
           name: page
           description: pagination parameter
           schema:
-            type: integer
-            default: 1
-        - in: query
-          name: pageSize
-          description: pagination parameter
-          schema:
-            type: integer
-            default: 50
+            $ref: '#/components/schemas/Pagination'
       responses:
         200:
           description: The list of filtered books
@@ -108,8 +101,7 @@ paths:
           name: pageSize
           description: pagination parameter
           schema:
-            type: integer
-            default: 50
+            $ref: '#/components/schemas/Pagination'
       responses:
         200:
           description: The list of filtered authors
