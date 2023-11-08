@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.1.2
+  version: 1.2.0
   description: STD22001
 servers:
   - url: https://library.com
@@ -140,25 +140,18 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Author'
-      post:
-        summary: Delete authors
-        operationId: deleteAuthors
-        tags:
-          - Authors
-        parameters:
-          - name: deleteAuthors
-            in: path
-            description: Authors to be deleted
-            schema:
-              type: string
-            required: true
-        responses:
-          200:
-            description: The authors deleted
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Author'
+    delete:
+      summary: Delete authors
+      operationId: DeleteAuthors
+      tags:
+        -Authors
+      parameters:
+        - name: aName
+          in: path
+          description: Authors name to be deleted
+          schema:
+            type: string
+          required: false
   /authors/{aId}:
     delete:
       summary: Delete an author
@@ -240,3 +233,4 @@ components:
         releaseDate:
           type: string
           format: date
+  parameters:
