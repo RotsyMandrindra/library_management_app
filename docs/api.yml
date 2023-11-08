@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.2.0
+  version: 1.2.2
   description: STD22001
 servers:
   - url: https://library.com
@@ -140,18 +140,26 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Author'
+  /authors/books:
     delete:
       summary: Delete authors
-      operationId: DeleteAuthors
+      operationId: deleteAuthors
       tags:
-        -Authors
+        - Authors
       parameters:
-        - name: aName
+        - name: aId
           in: path
-          description: Authors name to be deleted
+          description: Authors delete
           schema:
             type: string
           required: false
+      responses:
+        200:
+          description: The authors deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Author'
   /authors/{aId}:
     delete:
       summary: Delete an author
@@ -233,4 +241,24 @@ components:
         releaseDate:
           type: string
           format: date
+    Pagination:
+      type: object
+      properties:
+        Page:
+          type: integer
+          default: 1
+        PageSize:
+          type: integer
+          default: 50
   parameters:
+    queryPagination:
+      in: query
+      name: queryPagination
+      schema:
+        $ref: '#/components/schemas/Pagination'
+    pathPagination:
+      in: path
+      name: pathPagination
+      schema: '#/components/schemas/Pagination'
+
+
