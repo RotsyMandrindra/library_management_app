@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.3.0
+  version: 1.4.0
   description: STD22001
 servers:
   - url: https://library.com
@@ -146,44 +146,6 @@ paths:
               application/json:
                 schema:
                   $ref: '#/components/schemas/500Response'
-  /authors/import:
-    post:
-      summary: Returned a list of imported Authors
-      operationId: importedAuthors
-      tags:
-        - Authors
-      parameters:
-        - name: import
-          in: path
-          description: Returned a list of imported author
-          schema:
-            type: string
-          required: false
-      responses:
-        200:
-          description: The server run successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/200Response'
-        400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/400Response'
-        403:
-          description: Forbidden from accessing a valid URL
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/403Response'
-        500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/500Response'
   /authors:
     get:
       summary: Get all authors
@@ -386,7 +348,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/500Response'
-
+  /author/imports:
+    post:
+      operationId: importAuthors
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/ImportAuthor'
+                - type: file
+                  format: application/vnd.ms-excel
 components:
   schemas:
     Book:
@@ -476,6 +448,29 @@ components:
           properties:
             data:
               type: string
+    ImportAuthor:
+      type: object
+      properties:
+        authorName:
+          type: string
+        sex:
+          type: string
+
+    ImportBook:
+      type: object
+      properties:
+        bookName:
+          type: string
+        author:
+          $ref: '#/components/schemas/ImportAuthor'
+        pageNumbers:
+          type: integer
+        topic:
+          type: string
+        releaseDate:
+          type: string
+        idAuthor:
+          type: integer
   parameters:
     queryPagination:
       in: query
