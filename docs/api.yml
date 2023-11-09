@@ -507,6 +507,24 @@ paths:
                       $ref: '#/components/schemas/BorrowedBook'
                   response:
                     $ref: '#/components/schemas/200Response'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400Response'
+        403:
+          description: Forbidden from accessing a valid URL
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403Response'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500Response'
   /visitors/{visitorId}/returned-books:
     get:
       summary: A list of returned book by the visitor
@@ -531,6 +549,79 @@ paths:
                       $ref: '#/components/schemas/ReturnedBook'
                   response:
                     $ref: '#/components/schemas/200Response'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400Response'
+        403:
+          description: Forbidden from accessing a valid URL
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403Response'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500Response'
+  /visitors/{visitorId}/activities:
+    get:
+      summary: Visitor activities over a given period
+      parameters:
+        - name: visitorId
+          in: path
+          required: true
+          description: Id visitor
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          required: true
+          description: |
+            Period start date
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          required: true
+          description: |
+            Period end date
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: The server run successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  oneOf:
+                    - $ref: '#/components/schemas/BorrowedBook'
+                    - $ref: '#/components/schemas/ReturnedBook'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400Response'
+        403:
+          description: Forbidden from accessing a valid URL
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403Response'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500Response'
 components:
   schemas:
     Book:
