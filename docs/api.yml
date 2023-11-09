@@ -471,6 +471,15 @@ components:
           type: string
         idAuthor:
           type: integer
+    Visitor:
+      type: object
+      properties:
+        ID:
+          type: string
+        name:
+          type: string
+        reference:
+          type: string
   parameters:
     queryPagination:
       in: query
@@ -481,5 +490,3 @@ components:
       in: path
       name: pathPagination
       schema: '#/components/schemas/Pagination'
-
-
