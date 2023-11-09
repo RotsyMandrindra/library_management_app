@@ -483,6 +483,54 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/500Response'
+  /visitors/{visitorsId}/borrowed-books:
+    get:
+      summary: A list of borrowed book by the visitor
+      parameters:
+        - in: path
+          name: visitorsId
+          required: true
+          description: visitor id
+          schema:
+            type: string
+      responses:
+        200:
+          description: The server run successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BorrowedBook'
+                  response:
+                    $ref: '#/components/schemas/200Response'
+  /visitors/{visitorId}/returned-books:
+    get:
+      summary: A list of returned book by the visitor
+      parameters:
+        - name: visitorId
+          in: path
+          required: true
+          description: visitorId
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The server run successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ReturnedBook'
+                  response:
+                    $ref: '#/components/schemas/200Response'
 components:
   schemas:
     Book:
@@ -604,6 +652,32 @@ components:
           type: string
         reference:
           type: string
+    ReturnedBook:
+      type: object
+      properties:
+        bookId:
+          type: string
+          description: BookIdReturn
+        bookName:
+          type: string
+          description: BookNameReturn
+        returnDate:
+          type: string
+          format: date
+          description: ReturnBookDate
+    BorrowedBook:
+      type: object
+      properties:
+        bookId:
+          type: string
+          description: IdBookBorrow
+        bookName:
+          type: string
+          description: NameBookBorrow
+        borrowDate:
+          type: string
+          format: date
+          description: DateBookBorrow
   parameters:
     queryPagination:
       in: query
