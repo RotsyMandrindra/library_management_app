@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.5.0
+  version: 1.6.0
   description: STD22001
 servers:
   - url: https://library.com
@@ -146,6 +146,9 @@ paths:
               application/json:
                 schema:
                   $ref: '#/components/schemas/500Response'
+      security:
+        -OAuth2:
+          - admin
   /authors:
     get:
       summary: Get all authors
@@ -359,6 +362,9 @@ paths:
                 - $ref: '#/components/schemas/ImportAuthor'
                 - type: file
                   format: application/vnd.ms-excel
+      security:
+        -OAuth2:
+          - admin
   /visitors/{visitorsId}/borrow/{bookId}:
     post:
       summary: Borrow a book
@@ -400,6 +406,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/500Response'
+      security:
+        -OAuth2:
+          - admin
   /visitors/{visitorsId}/return/{bookId}:
     post:
       summary: Return a book
@@ -441,6 +450,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/500Response'
+      security:
+        -OAuth2:
+          - admin
   /books/status:
     get:
       summary: A list of borrowed and available book
@@ -622,6 +634,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/500Response'
+  /books/available:
+    get:
+      summary: List of available books
+      responses:
+        '200':
+          description: List of books currently available
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Book'
+                  response:
+                    $ref: '#/components/schemas/200Response'
 components:
   schemas:
     Book:
@@ -779,3 +808,11 @@ components:
       in: path
       name: pathPagination
       schema: '#/components/schemas/Pagination'
+  securitySchemes:
+    OAuth2:
+      type: OAuth2
+      flows:
+        password:
+          tokenUrl: 'https://library/token'
+      scopes:
+        admin: Administrator access
