@@ -359,6 +359,88 @@ paths:
                 - $ref: '#/components/schemas/ImportAuthor'
                 - type: file
                   format: application/vnd.ms-excel
+  /visitors/{visitorsId}/borrow/{bookId}:
+    post:
+      summary: Borrow a book
+      parameters:
+        - in: path
+          name: visitorsId
+          required: true
+          description: Visitor Id
+          schema:
+            type: string
+        - in: path
+          name: bookId
+          required: true
+          description: Book id
+          schema:
+            type: string
+      responses:
+        200:
+          description: The server run successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/200Response'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400Response'
+        403:
+          description: Forbidden from accessing a valid URL
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403Response'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500Response'
+  /visitors/{visitorsId}/return/{bookId}:
+    post:
+      summary: Return a book
+      parameters:
+        - in: path
+          name: visitorsId
+          required: true
+          description: Visitor Id
+          schema:
+            type: string
+        - in: path
+          name: bookId
+          required: true
+          description: Book id
+          schema:
+            type: string
+      responses:
+        200:
+          description: The server run successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/200Response'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400Response'
+        403:
+          description: Forbidden from accessing a valid URL
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/403Response'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/500Response'
 components:
   schemas:
     Book:
