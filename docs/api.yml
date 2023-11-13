@@ -48,29 +48,13 @@ paths:
             $ref: '#/components/schemas/Pagination'
       responses:
         200:
-          description: The server run successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/200Response'
+          $ref: '#/components/schemas/200Response'
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/400Response'
+          $ref: '#/components/schemas/400Response'
         403:
-          description: Forbidden from accessing a valid URL
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/403Response'
+          $ref: '#/components/schemas/403Response'
         500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/500Response'
+          $ref: '#/components/schemas/500Response'
     put:
       tags:
         - Books
@@ -85,29 +69,13 @@ paths:
                 $ref: '#/components/schemas/Book'
       responses:
         200:
-          description: The server run successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/200Response'
+          $ref: '#/components/schemas/200Response'
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/400Response'
+          $ref: '#/components/schemas/400Response'
         403:
-          description: Forbidden from accessing a valid URL
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/403Response'
+          $ref: '#/components/schemas/403Response'
         500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/500Response'
+          $ref: '#/components/schemas/500Response'
   /books/import:
     post:
       summary: Returned a list of imported Books
@@ -123,29 +91,13 @@ paths:
           required: false
       responses:
           200:
-            description: The server run successfully
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/200Response'
+            $ref: '#/components/schemas/200Response'
           400:
-            description: Bad request
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/400Response'
+           $ref: '#/components/schemas/400Response'
           403:
-            description: Forbidden from accessing a valid URL
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/403Response'
+            $ref: '#/components/schemas/403Response'
           500:
-            description: Internal Server Error
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/500Response'
+            $ref: '#/components/schemas/500Response'
       security:
         -OAuth2:
           - admin
@@ -177,29 +129,13 @@ paths:
             $ref: '#/components/schemas/Pagination'
       responses:
         200:
-          description: The server run successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/200Response'
+          $ref: '#/components/schemas/200Response'
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/400Response'
+          $ref: '#/components/schemas/400Response'
         403:
-          description: Forbidden from accessing a valid URL
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/403Response'
+          $ref: '#/components/schemas/403Response'
         500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/500Response'
+          $ref: '#/components/schemas/500Response'
     put:
       summary: Create or update authors
       operationId: crupdateAuthors
@@ -214,29 +150,13 @@ paths:
                 $ref: '#/components/schemas/Author'
       responses:
         200:
-          description: The server run successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/200Response'
+          $ref: '#/components/schemas/200Response'
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/400Response'
+          $ref: '#/components/schemas/400Response'
         403:
-          description: Forbidden from accessing a valid URL
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/403Response'
+          $ref: '#/components/schemas/403Response'
         500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/500Response'
+          $ref: '#/components/schemas/500Response'
   /authors/books:
     delete:
       summary: Delete authors
@@ -252,29 +172,13 @@ paths:
           required: false
       responses:
         200:
-          description: The server run successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/200Response'
+          $ref: '#/components/schemas/200Response'
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/400Response'
+          $ref: '#/components/schemas/400Response'
         403:
-          description: Forbidden from accessing a valid URL
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/403Response'
+          $ref: '#/components/schemas/403Response'
         500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/500Response'
+          $ref: '#/components/schemas/500Response'
   /authors/{aId}:
     delete:
       summary: Delete an author
@@ -290,29 +194,13 @@ paths:
           required: true
       responses:
         200:
-          description: The server run successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/200Response'
+          $ref: '#/components/schemas/200Response'
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/400Response'
+          $ref: '#/components/schemas/400Response'
         403:
-          description: Forbidden from accessing a valid URL
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/403Response'
+          $ref: '#/components/schemas/403Response'
         500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/500Response'
+          $ref: '#/components/schemas/500Response'
   /books/{bId}/authors/{aId}:
     put:
       parameters:
@@ -328,29 +216,13 @@ paths:
             type: string
       responses:
         200:
-          description: The server run successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/200Response'
+          $ref: '#/components/schemas/200Response'
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/400Response'
+          $ref: '#/components/schemas/400Response'
         403:
-          description: Forbidden from accessing a valid URL
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/403Response'
+          $ref: '#/components/schemas/403Response'
         500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/500Response'
+          $ref: '#/components/schemas/500Response'
   /author/imports:
     post:
       operationId: importAuthors
@@ -383,29 +255,13 @@ paths:
             type: string
       responses:
         200:
-          description: The server run successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/200Response'
+          $ref: '#/components/schemas/200Response'
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/400Response'
+          $ref: '#/components/schemas/400Response'
         403:
-          description: Forbidden from accessing a valid URL
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/403Response'
+          $ref: '#/components/schemas/403Response'
         500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/500Response'
+          $ref: '#/components/schemas/500Response'
       security:
         -OAuth2:
           - admin
@@ -427,29 +283,13 @@ paths:
             type: string
       responses:
         200:
-          description: The server run successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/200Response'
+          $ref: '#/components/schemas/200Response'
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/400Response'
+          $ref: '#/components/schemas/400Response'
         403:
-          description: Forbidden from accessing a valid URL
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/403Response'
+          $ref: '#/components/schemas/403Response'
         500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/500Response'
+          $ref: '#/components/schemas/500Response'
       security:
         -OAuth2:
           - admin
@@ -478,23 +318,11 @@ paths:
                   response:
                     $ref: '#/components/schemas/200Response'
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/400Response'
+          $ref: '#/components/schemas/400Response'
         403:
-          description: Forbidden from accessing a valid URL
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/403Response'
+          $ref: '#/components/schemas/403Response'
         500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/500Response'
+          $ref: '#/components/schemas/500Response'
   /visitors/{visitorsId}/borrowed-books:
     get:
       summary: A list of borrowed book by the visitor
@@ -520,23 +348,11 @@ paths:
                   response:
                     $ref: '#/components/schemas/200Response'
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/400Response'
+          $ref: '#/components/schemas/400Response'
         403:
-          description: Forbidden from accessing a valid URL
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/403Response'
+          $ref: '#/components/schemas/403Response'
         500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/500Response'
+          $ref: '#/components/schemas/500Response'
   /visitors/{visitorId}/returned-books:
     get:
       summary: A list of returned book by the visitor
@@ -562,23 +378,11 @@ paths:
                   response:
                     $ref: '#/components/schemas/200Response'
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/400Response'
+         $ref: '#/components/schemas/400Response'
         403:
-          description: Forbidden from accessing a valid URL
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/403Response'
+          $ref: '#/components/schemas/403Response'
         500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/500Response'
+          $ref: '#/components/schemas/500Response'
   /visitors/{visitorId}/activities:
     get:
       summary: Visitor activities over a given period
@@ -617,23 +421,11 @@ paths:
                     - $ref: '#/components/schemas/BorrowedBook'
                     - $ref: '#/components/schemas/ReturnedBook'
         400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/400Response'
+          $ref: '#/components/schemas/400Response'
         403:
-          description: Forbidden from accessing a valid URL
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/403Response'
+          $ref: '#/components/schemas/403Response'
         500:
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/500Response'
+          $ref: '#/components/schemas/500Response'
   /books/available:
     get:
       summary: List of available books
@@ -651,6 +443,12 @@ paths:
                       $ref: '#/components/schemas/Book'
                   response:
                     $ref: '#/components/schemas/200Response'
+        400:
+          $ref: '#/components/schemas/400Response'
+        403:
+          $ref: '#/components/schemas/403Response'
+        500:
+          $ref: '#/components/schemas/500Response'
 components:
   schemas:
     Book:
@@ -703,15 +501,12 @@ components:
     Responses:
       type: object
       properties:
-        status:
-          type: object
-          properties:
-            statusCode:
-              type: integer
-            message:
-              type: string
-        body:
+        statusCode:
+          type: integer
+        message:
           type: string
+        body:
+          type: object
     200Response:
       allOf:
         - $ref: '#/components/schemas/Responses'
@@ -740,6 +535,13 @@ components:
           properties:
             data:
               type: string
+    BadRequestBody:
+      allOf:
+        - $ref: '#/components/schemas/Responses'
+          example:
+            status:
+              code: 400
+              message: BAD REQUEST
     ImportAuthor:
       type: object
       properties:
