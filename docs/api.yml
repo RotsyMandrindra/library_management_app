@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.1.0
+  version: 1.1.1
   description: STD22001
 servers:
   - url: https://library.com
@@ -164,15 +164,13 @@ paths:
         - Authors
       parameters:
         - in: path
-          name: page
-          schema:
-            type: integer
-          required: true
+          name: Page
+          description: the number of the first page of the book default 1
         - in: path
-          name: size
-          schema:
-            type: integer
-          required: true
+          name: PageSize
+          description: the size of the book default 50
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
       responses:
         200:
           description: The author deleted
