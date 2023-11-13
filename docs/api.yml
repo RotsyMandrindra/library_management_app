@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.6.0
+  version: 1.1.0
   description: STD22001
 servers:
   - url: https://library.com
@@ -41,20 +41,15 @@ paths:
             type: string
             format: date
           required: false
-        - in: query
-          name: page
-          description: pagination parameter
-          schema:
-            $ref: '#/components/schemas/Pagination'
+        - $ref: '#/components/parameters/Page'
+        - $ref: '#/components/parameters/PageSize'
       responses:
         200:
-          $ref: '#/components/schemas/200Response'
+          $ref: '#/components/responses/BookList_200'
         400:
-          $ref: '#/components/schemas/400Response'
+          $ref: '#/components/responses/400'
         403:
-          $ref: '#/components/schemas/403Response'
-        500:
-          $ref: '#/components/schemas/500Response'
+          $ref: '#/components/responses/403'
     put:
       tags:
         - Books
@@ -66,41 +61,58 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/Book'
+                $ref: '#/components/schemas/CrupdateBook'
       responses:
         200:
-          $ref: '#/components/schemas/200Response'
+          $ref: '#/components/responses/BookList_200'
         400:
-          $ref: '#/components/schemas/400Response'
-        403:
-          $ref: '#/components/schemas/403Response'
-        500:
-          $ref: '#/components/schemas/500Response'
-  /books/import:
-    post:
-      summary: Returned a list of imported Books
-      operationId: importedBooks
+          $ref: '#/components/responses/400'
+  /books/{bookId}/authors/{authorId}:
+    put:
       tags:
         - Books
+      summary: Associate a single book to an author
+      operationId: associateBookAuthor
       parameters:
-        - name: import
+        - name: bookId
           in: path
-          description: Returned a list of imported book
           schema:
             type: string
-          required: false
+          required: true
+        - name: authorId
+          in: path
+          schema:
+            type: string
+          required: true
       responses:
-          200:
-            $ref: '#/components/schemas/200Response'
-          400:
-           $ref: '#/components/schemas/400Response'
-          403:
-            $ref: '#/components/schemas/403Response'
-          500:
-            $ref: '#/components/schemas/500Response'
-      security:
-        -OAuth2:
-          - admin
+        200:
+          description: The updated book
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+  /books/authors:
+    put:
+      tags:
+        - Books
+      summary: Associate some books to some authors
+      operationId: associateBooksAuthors
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/UpdateBook'
+      responses:
+        200:
+          description: List of updated books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
   /authors:
     get:
       summary: Get all authors
@@ -116,26 +128,15 @@ paths:
           schema:
             type: string
           required: false
-        - in: path
-          name: page
-          description: pagination parameter
-          schema:
-            type: integer
-            default: 1
-        - in: path
-          name: pageSize
-          description: pagination parameter
-          schema:
-            $ref: '#/components/schemas/Pagination'
       responses:
         200:
-          $ref: '#/components/schemas/200Response'
-        400:
-          $ref: '#/components/schemas/400Response'
-        403:
-          $ref: '#/components/schemas/403Response'
-        500:
-          $ref: '#/components/schemas/500Response'
+          description: The list of filtered authors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Author'
     put:
       summary: Create or update authors
       operationId: crupdateAuthors
@@ -150,35 +151,37 @@ paths:
                 $ref: '#/components/schemas/Author'
       responses:
         200:
-          $ref: '#/components/schemas/200Response'
-        400:
-          $ref: '#/components/schemas/400Response'
-        403:
-          $ref: '#/components/schemas/403Response'
-        500:
-          $ref: '#/components/schemas/500Response'
-  /authors/books:
-    delete:
-      summary: Delete authors
-      operationId: deleteAuthors
+          description: The list of created or updated authors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Author'
+  /authors/page/{page}/size/{size}:
+    get:
       tags:
         - Authors
       parameters:
-        - name: aId
-          in: path
-          description: Authors delete
+        - in: path
+          name: page
           schema:
-            type: string
-          required: false
+            type: integer
+          required: true
+        - in: path
+          name: size
+          schema:
+            type: integer
+          required: true
       responses:
         200:
-          $ref: '#/components/schemas/200Response'
-        400:
-          $ref: '#/components/schemas/400Response'
-        403:
-          $ref: '#/components/schemas/403Response'
-        500:
-          $ref: '#/components/schemas/500Response'
+          description: The author deleted
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Author'
   /authors/{aId}:
     delete:
       summary: Delete an author
@@ -194,269 +197,94 @@ paths:
           required: true
       responses:
         200:
-          $ref: '#/components/schemas/200Response'
-        400:
-          $ref: '#/components/schemas/400Response'
-        403:
-          $ref: '#/components/schemas/403Response'
-        500:
-          $ref: '#/components/schemas/500Response'
-  /books/{bId}/authors/{aId}:
-    put:
-      parameters:
-        - name: bookId
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: authorId
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          $ref: '#/components/schemas/200Response'
-        400:
-          $ref: '#/components/schemas/400Response'
-        403:
-          $ref: '#/components/schemas/403Response'
-        500:
-          $ref: '#/components/schemas/500Response'
-  /author/imports:
-    post:
-      operationId: importAuthors
-      requestBody:
-        content:
-          application/json:
-            schema:
-              oneOf:
-                - $ref: '#/components/schemas/ImportAuthor'
-                - type: file
-                  format: application/vnd.ms-excel
-      security:
-        -OAuth2:
-          - admin
-  /visitors/{visitorsId}/borrow/{bookId}:
-    post:
-      summary: Borrow a book
-      parameters:
-        - in: path
-          name: visitorsId
-          required: true
-          description: Visitor Id
-          schema:
-            type: string
-        - in: path
-          name: bookId
-          required: true
-          description: Book id
-          schema:
-            type: string
-      responses:
-        200:
-          $ref: '#/components/schemas/200Response'
-        400:
-          $ref: '#/components/schemas/400Response'
-        403:
-          $ref: '#/components/schemas/403Response'
-        500:
-          $ref: '#/components/schemas/500Response'
-      security:
-        -OAuth2:
-          - admin
-  /visitors/{visitorsId}/return/{bookId}:
-    post:
-      summary: Return a book
-      parameters:
-        - in: path
-          name: visitorsId
-          required: true
-          description: Visitor Id
-          schema:
-            type: string
-        - in: path
-          name: bookId
-          required: true
-          description: Book id
-          schema:
-            type: string
-      responses:
-        200:
-          $ref: '#/components/schemas/200Response'
-        400:
-          $ref: '#/components/schemas/400Response'
-        403:
-          $ref: '#/components/schemas/403Response'
-        500:
-          $ref: '#/components/schemas/500Response'
-      security:
-        -OAuth2:
-          - admin
-  /books/status:
-    get:
-      summary: A list of borrowed and available book
-      responses:
-        200:
-          description: The server run successfully
+          description: The author deleted
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      borrowed:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/Book'
-                      available:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/Book'
-                  response:
-                    $ref: '#/components/schemas/200Response'
-        400:
-          $ref: '#/components/schemas/400Response'
-        403:
-          $ref: '#/components/schemas/403Response'
-        500:
-          $ref: '#/components/schemas/500Response'
-  /visitors/{visitorsId}/borrowed-books:
-    get:
-      summary: A list of borrowed book by the visitor
-      parameters:
-        - in: path
-          name: visitorsId
-          required: true
-          description: visitor id
-          schema:
-            type: string
-      responses:
-        200:
-          description: The server run successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/BorrowedBook'
-                  response:
-                    $ref: '#/components/schemas/200Response'
-        400:
-          $ref: '#/components/schemas/400Response'
-        403:
-          $ref: '#/components/schemas/403Response'
-        500:
-          $ref: '#/components/schemas/500Response'
-  /visitors/{visitorId}/returned-books:
-    get:
-      summary: A list of returned book by the visitor
-      parameters:
-        - name: visitorId
-          in: path
-          required: true
-          description: visitorId
-          schema:
-            type: string
-      responses:
-        '200':
-          description: The server run successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/ReturnedBook'
-                  response:
-                    $ref: '#/components/schemas/200Response'
-        400:
-         $ref: '#/components/schemas/400Response'
-        403:
-          $ref: '#/components/schemas/403Response'
-        500:
-          $ref: '#/components/schemas/500Response'
-  /visitors/{visitorId}/activities:
-    get:
-      summary: Visitor activities over a given period
-      parameters:
-        - name: visitorId
-          in: path
-          required: true
-          description: Id visitor
-          schema:
-            type: string
-        - name: startDate
-          in: query
-          required: true
-          description: |
-            Period start date
-          schema:
-            type: string
-            format: date
-        - name: endDate
-          in: query
-          required: true
-          description: |
-            Period end date
-          schema:
-            type: string
-            format: date
-      responses:
-        '200':
-          description: The server run successfully
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  oneOf:
-                    - $ref: '#/components/schemas/BorrowedBook'
-                    - $ref: '#/components/schemas/ReturnedBook'
-        400:
-          $ref: '#/components/schemas/400Response'
-        403:
-          $ref: '#/components/schemas/403Response'
-        500:
-          $ref: '#/components/schemas/500Response'
-  /books/available:
-    get:
-      summary: List of available books
-      responses:
-        '200':
-          description: List of books currently available
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Book'
-                  response:
-                    $ref: '#/components/schemas/200Response'
-        400:
-          $ref: '#/components/schemas/400Response'
-        403:
-          $ref: '#/components/schemas/403Response'
-        500:
-          $ref: '#/components/schemas/500Response'
+                $ref: '#/components/schemas/Author'
 components:
+  parameters:
+    Page:
+      in: query
+      name: page
+      schema:
+        type: integer
+        default: 1
+      required: false
+    PageSize:
+      in: query
+      name: pageSize
+      schema:
+        type: integer
+        default: 30
+      required: false
+  responses:
+    BookList_200:
+      description: List of books
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BookListBody'
+    400:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BadRequestBody'
+    403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ForbiddenBody'
   schemas:
+    ResponseStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 200
+        message:
+          type: string
+          example: OK
+    ResponseBodyTemplate:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/ResponseStatus'
+        body:
+          type: object
+    BadRequestBody:
+      allOf:
+        - $ref: '#/components/schemas/ResponseBodyTemplate'
+      example:
+        status:
+          code: 400
+          message: BAD REQUEST
+        body: { }
+    ForbiddenBody:
+      allOf:
+        - $ref: '#/components/schemas/ResponseBodyTemplate'
+      example:
+        status:
+          code: 403
+          message: FORBIDDEN
+        body: { }
+    BookListBody:
+      allOf:
+        - $ref: '#/components/schemas/ResponseBodyTemplate'
+        - properties:
+            body:
+              type: array
+              items:
+                $ref: '#/components/schemas/Book'
     Book:
+      type: object
+      properties:
+        author:
+          $ref: '#/components/schemas/Author'
       allOf:
         - $ref: '#/components/schemas/CrupdateBook'
-        - properties:
-            author:
-              $ref: '#/components/schemas/Author'
     Author:
       type: object
       properties:
@@ -474,8 +302,8 @@ components:
     CrupdateBook:
       type: object
       properties:
-        ID:
-          type: integer
+        id:
+          type: string
         bookName:
           type: string
         pageNumbers:
@@ -489,132 +317,13 @@ components:
         releaseDate:
           type: string
           format: date
-    Pagination:
-      type: object
-      properties:
-        Page:
-          type: integer
-          default: 1
-        PageSize:
-          type: integer
-          default: 50
-    Responses:
-      type: object
-      properties:
-        statusCode:
-          type: integer
-        message:
-          type: string
-        body:
-          type: object
-    200Response:
-      allOf:
-        - $ref: '#/components/schemas/Responses'
-        - type: object
-          properties:
-            data:
-              type: string
-    400Response:
-      allOf:
-        - $ref: '#/components/schemas/Responses'
-        - type: object
-          properties:
-            data:
-              type: string
-    403Response:
-      allOf:
-        - $ref: '#/components/schemas/Responses'
-        - type: object
-          properties:
-            data:
-              type: string
-    500Response:
-      allOf:
-        - $ref: '#/components/schemas/Responses'
-        - type: object
-          properties:
-            data:
-              type: string
-    BadRequestBody:
-      allOf:
-        - $ref: '#/components/schemas/Responses'
-          example:
-            status:
-              code: 400
-              message: BAD REQUEST
-    ImportAuthor:
-      type: object
-      properties:
-        authorName:
-          type: string
-        sex:
-          type: string
-
-    ImportBook:
-      type: object
-      properties:
-        bookName:
-          type: string
-        author:
-          $ref: '#/components/schemas/ImportAuthor'
-        pageNumbers:
-          type: integer
-        topic:
-          type: string
-        releaseDate:
-          type: string
-        idAuthor:
-          type: integer
-    Visitor:
-      type: object
-      properties:
-        ID:
-          type: string
-        name:
-          type: string
-        reference:
-          type: string
-    ReturnedBook:
+    UpdateBook:
       type: object
       properties:
         bookId:
           type: string
-          description: BookIdReturn
-        bookName:
+        authorId:
           type: string
-          description: BookNameReturn
-        returnDate:
-          type: string
-          format: date
-          description: ReturnBookDate
-    BorrowedBook:
-      type: object
-      properties:
-        bookId:
-          type: string
-          description: IdBookBorrow
-        bookName:
-          type: string
-          description: NameBookBorrow
-        borrowDate:
-          type: string
-          format: date
-          description: DateBookBorrow
-  parameters:
-    queryPagination:
-      in: query
-      name: queryPagination
-      schema:
-        $ref: '#/components/schemas/Pagination'
-    pathPagination:
-      in: path
-      name: pathPagination
-      schema: '#/components/schemas/Pagination'
-  securitySchemes:
-    OAuth2:
-      type: OAuth2
-      flows:
-        password:
-          tokenUrl: 'https://library/token'
-      scopes:
-        admin: Administrator access
+      required:
+        - bookId
+        - authorId
