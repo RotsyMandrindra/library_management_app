@@ -326,4 +326,4 @@ components:
           type: string
       required:
         - bookId
-        - authorId
+        - authorIdc
