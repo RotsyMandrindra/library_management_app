@@ -232,6 +232,17 @@ paths:
           $ref: '#/components/responses/403'
         500:
           $ref: '#/components/responses/500'
+  /author/imports:
+    post:
+      operationId: importAuthors
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/ImportAuthor'
+                - type: file
+                  format: application/vnd.ms-excel
 components:
   parameters:
     Page:
