@@ -121,6 +121,28 @@ paths:
           $ref: '#/components/responses/403'
         500:
           $ref: '#/components/responses/500'
+  /books/import:
+    post:
+      summary: Returned a list of imported Books
+      operationId: importedBooks
+      tags:
+        - Books
+      parameters:
+        - name: import
+          in: path
+          description: Returned a list of imported book
+          schema:
+            type: string
+          required: false
+      responses:
+        200:
+          $ref: '#/components/responses/BookList_200'
+        400:
+          $ref: '#/components/responses/400'
+        403:
+          $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
   /authors:
     get:
       summary: Get all authors
