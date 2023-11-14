@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.1.1
+  version: 1.2.0
   description: STD22001
 servers:
   - url: https://library.com
@@ -145,6 +145,53 @@ paths:
           $ref: '#/components/responses/403'
         500:
           $ref: '#/components/responses/500'
+      security:
+        - OAuth2:
+            - admin
+  /books/borrow:
+    post:
+      summary: Borrow a book
+      description: Visitor can borrow a book
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BorrowRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/BookList_200'
+        400:
+          $ref: '#/components/responses/400'
+        403:
+          $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
+      security:
+        - OAuth2:
+            - admin
+  /books/return:
+    post:
+      summary: Return a book
+      description: Visitor can return a book
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReturnRequest'
+      responses:
+        200:
+          $ref: '#/components/responses/BookList_200'
+        400:
+          $ref: '#/components/responses/400'
+        403:
+          $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
+      security:
+        - OAuth2:
+            - admin
   /authors:
     get:
       summary: Get all authors
@@ -184,6 +231,65 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/AuthorList_200'
+        400:
+          $ref: '#/components/responses/400'
+        403:
+          $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
+  /books/available:
+    get:
+      summary: List of available books
+      responses:
+        200:
+          $ref: '#/components/responses/BookList_200'
+        400:
+          $ref: '#/components/responses/400'
+        403:
+          $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
+  /books/unavailable:
+    get:
+      summary: List of unavailable books
+      responses:
+        200:
+          $ref: '#/components/responses/BookList_200'
+        400:
+          $ref: '#/components/responses/400'
+        403:
+          $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
+  /visitors/{visitorId}/activities:
+    get:
+      summary: Activities of a visitor
+      parameters:
+        - name: visitorId
+          in: path
+          required: true
+          description: Visitor ID
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          required: true
+          description: |
+            Start date (format: YYYY-MM-DD)
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          required: true
+          description: |
+            End date (format: YYYY-MM-DD)
+          schema:
+            type: string
+            format: date
+      responses:
+        200:
+          $ref: '#/components/schemas/BookListBody'
         400:
           $ref: '#/components/responses/400'
         403:
@@ -254,6 +360,9 @@ paths:
           $ref: '#/components/responses/403'
         500:
           $ref: '#/components/responses/500'
+      security:
+        - OAuth2:
+           -admin
 components:
   parameters:
     Page:
@@ -429,3 +538,36 @@ components:
           type: string
         idAuthor:
           type: integer
+    Visitor:
+      type: object
+      properties:
+        IdV:
+          type: string
+        name:
+          type: string
+        reference:
+          type: string
+    BorrowRequest:
+      type: object
+      properties:
+        bookId:
+          type: string
+          description: Id of borrowed book
+        visitorId:
+          type: string
+          description: Id of the visitor who borrowed the book
+    ReturnRequest:
+      type: object
+      properties:
+        bookId:
+          type: string
+          description: Id of the returned book
+        visitorId:
+          type: string
+          description: Id of the visitor who returned the book
+  securitySchemes:
+    OAuth2:
+      type: OAuth2
+      flows:
+        password:
+          tokenUrl: 'https://library.com/token'
