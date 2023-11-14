@@ -131,9 +131,11 @@ paths:
         - name: import
           in: path
           description: Returned a list of imported book
-          schema:
-            type: string
-          required: false
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ImportBook'
       responses:
         200:
           $ref: '#/components/responses/BookList_200'
@@ -243,6 +245,15 @@ paths:
                 - $ref: '#/components/schemas/ImportAuthor'
                 - type: file
                   format: application/vnd.ms-excel
+      responses:
+        200:
+          $ref: '#/components/responses/AuthorList_200'
+        400:
+          $ref: '#/components/responses/400'
+        403:
+          $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
 components:
   parameters:
     Page:
@@ -396,3 +407,25 @@ components:
       required:
         - bookId
         - authorIdc
+    ImportAuthor:
+      type: object
+      properties:
+        authorName:
+          type: string
+        sex:
+          type: string
+    ImportBook:
+      type: object
+      properties:
+        bookName:
+          type: string
+        author:
+          $ref: '#/components/schemas/ImportAuthor'
+        pageNumbers:
+          type: integer
+        topic:
+          type: string
+        releaseDate:
+          type: string
+        idAuthor:
+          type: integer
