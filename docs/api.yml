@@ -50,6 +50,8 @@ paths:
           $ref: '#/components/responses/400'
         403:
           $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
     put:
       tags:
         - Books
@@ -67,6 +69,10 @@ paths:
           $ref: '#/components/responses/BookList_200'
         400:
           $ref: '#/components/responses/400'
+        403:
+          $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
   /books/{bookId}/authors/{authorId}:
     put:
       tags:
@@ -86,11 +92,13 @@ paths:
           required: true
       responses:
         200:
-          description: The updated book
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Book'
+          $ref: '#/components/responses/BookList_200'
+        400:
+          $ref: '#/components/responses/400'
+        403:
+          $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
   /books/authors:
     put:
       tags:
@@ -106,13 +114,13 @@ paths:
                 $ref: '#/components/schemas/UpdateBook'
       responses:
         200:
-          description: List of updated books
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Book'
+          $ref: '#/components/responses/BookList_200'
+        400:
+          $ref: '#/components/responses/400'
+        403:
+          $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
   /authors:
     get:
       summary: Get all authors
@@ -130,13 +138,13 @@ paths:
           required: false
       responses:
         200:
-          description: The list of filtered authors
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Author'
+          $ref: '#/components/responses/AuthorList_200'
+        400:
+          $ref: '#/components/responses/400'
+        403:
+          $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
     put:
       summary: Create or update authors
       operationId: crupdateAuthors
@@ -151,13 +159,13 @@ paths:
                 $ref: '#/components/schemas/Author'
       responses:
         200:
-          description: The list of created or updated authors
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Author'
+          $ref: '#/components/responses/AuthorList_200'
+        400:
+          $ref: '#/components/responses/400'
+        403:
+          $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
   /authors/page/{page}/size/{size}:
     get:
       tags:
@@ -173,13 +181,13 @@ paths:
         - $ref: '#/components/parameters/PageSize'
       responses:
         200:
-          description: The author deleted
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Author'
+          $ref: '#/components/responses/AuthorList_200'
+        400:
+          $ref: '#/components/responses/400'
+        403:
+          $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
   /authors/{aId}:
     delete:
       summary: Delete an author
@@ -195,11 +203,13 @@ paths:
           required: true
       responses:
         200:
-          description: The author deleted
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Author'
+          $ref: '#/components/responses/AuthorList_200'
+        400:
+          $ref: '#/components/responses/400'
+        403:
+          $ref: '#/components/responses/403'
+        500:
+          $ref: '#/components/responses/500'
 components:
   parameters:
     Page:
@@ -223,6 +233,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/BookListBody'
+    AuthorList_200:
+      description: List of authors
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AuthorListBody'
     400:
       description: Bad Request
       content:
@@ -235,6 +251,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ForbiddenBody'
+    500:
+      description: Internal Server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InternalServerError'
   schemas:
     ResponseStatus:
       type: object
@@ -268,6 +290,14 @@ components:
           code: 403
           message: FORBIDDEN
         body: { }
+    InternalServerError:
+      allOf:
+        - $ref: '#/components/schemas/ResponseBodyTemplate'
+      example:
+        status:
+          code: 500
+          message: INTERNAL SERVER ERROR
+        body: { }
     BookListBody:
       allOf:
         - $ref: '#/components/schemas/ResponseBodyTemplate'
@@ -276,6 +306,14 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/Book'
+    AuthorListBody:
+      allOf:
+        - $ref: '#/components/schemas/ResponseBodyTemplate'
+        - properties:
+            body:
+              type: array
+              items:
+                $ref: '#/components/schemas/Author'
     Book:
       type: object
       properties:
