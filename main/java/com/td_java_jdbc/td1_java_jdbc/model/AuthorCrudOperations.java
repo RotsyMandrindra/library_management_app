@@ -19,7 +19,7 @@ public class AuthorCrudOperations implements CrudOperations<com.td_java_jdbc.td1
     }
 
     @Override
-    public Author save(Author toSave) {
+    public Book save(Author toSave) {
         return null;
     }
 
@@ -28,7 +28,7 @@ public class AuthorCrudOperations implements CrudOperations<com.td_java_jdbc.td1
     }
 
     @Override
-    public Author delete(Author toDelete) {
+    public void delete(Author toDelete) {
         return null;
     }
 }

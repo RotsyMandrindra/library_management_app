@@ -16,12 +16,12 @@ public class SubscribersCrudOperations implements CrudOperations<User> {
     }
 
     @Override
-    public User save(User toSave) {
+    public Book save(User toSave) {
         return null;
     }
 
     @Override
-    public User delete(User toDelete) {
+    public void delete(User toDelete) {
         return null;
     }
 }

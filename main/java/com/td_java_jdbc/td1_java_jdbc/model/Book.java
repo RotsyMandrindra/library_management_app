@@ -1,4 +1,4 @@
-package com.td_java_jdbc.td1_java_jdbc.model;
+package main.java.com.td_java_jdbc.td1_java_jdbc.model;
 
 import lombok.*;
 
