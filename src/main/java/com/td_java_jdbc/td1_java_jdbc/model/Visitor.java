@@ -1,16 +1,16 @@
 package com.td_java_jdbc.td1_java_jdbc.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.stereotype.Service;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@EqualsAndHashCode
+@ToString
 
-public class Visitor {
-    private int id_visitor;
-    private String visitor_name;
+public class Visitor extends User{
     private String reference;
+    public Visitor(String Id, String name, String role) {
+        super(Id, name, role);
+    }
 }
